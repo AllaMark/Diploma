@@ -1,13 +1,12 @@
 import pytest
 from selenium import webdriver
 
-
-
-
-# Фикстура для драйвера Chrome
-@pytest.fixture()
+@pytest.fixture(scope="function")
 def driver():
-   driver = webdriver.Chrome()
-   yield driver
-   driver.quit()
+    """Фикстура для создания WebDriver"""
+    driver = webdriver.Chrome()
+    driver.implicitly_wait(10)
+    driver.maximize_window()
 
+    yield driver
+    driver.quit()
