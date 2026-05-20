@@ -6,20 +6,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 @pytest.mark.api
 @allure.title("Поиск фильма на русском языке")
 @allure.story("Поиск")
 # поиск по названию, проверить что в теле ответа есть
 def test_search_film_name():
-    name = 'Мачеха'
-    url = (f"https://kinopoiskapiunofficial.tech/api/v2.1/"
-           f"films/search-by-keyword?keyword={name}&page=1")
-    key = os.getenv('API_KEY')
+    name = "Мачеха"
+    url = (
+        f"https://kinopoiskapiunofficial.tech/api/v2.1/"
+        f"films/search-by-keyword?keyword={name}&page=1"
+    )
+    key = os.getenv("API_KEY")
     payload = {}
-    headers = {
-        'accept': 'application/json',
-        'X-API-KEY': key
-    }
+    headers = {"accept": "application/json", "X-API-KEY": key}
     with allure.step("Отправляем запрос"):
         response = requests.request("GET", url, headers=headers, data=payload)
         status_code = response.status_code
@@ -28,46 +28,47 @@ def test_search_film_name():
         assert status_code == 200
     keyword = resp["keyword"]
     pages_count = resp["pagesCount"]
-    film = resp['films']
+    film = resp["films"]
     with allure.step("Проверяем, что фильм нашёлся"):
         assert keyword == name
         assert pages_count > 0
         assert isinstance(film, list)
+
 
 @pytest.mark.api
 @allure.title("Поиск фильма на русском языке")
 @allure.story("Поиск")
 # запрос с неправильным токеном, ожидаемая ошибка
 def test_search_no_token():
-    name = 'Мачеха'
-    url = (f"https://kinopoiskapiunofficial.tech/api/v2.1/"
-           f"films/search-by-keyword?keyword={name}&page=1")
+    name = "Мачеха"
+    url = (
+        f"https://kinopoiskapiunofficial.tech/api/v2.1/"
+        f"films/search-by-keyword?keyword={name}&page=1"
+    )
     payload = {}
-    headers = {
-        'accept': 'application/json',
-        'X-API-KEY': ""
-    }
+    headers = {"accept": "application/json", "X-API-KEY": ""}
     with allure.step("Отправляем запрос"):
         response = requests.request("GET", url, headers=headers, data=payload)
     with allure.step("Проверяем статус-код"):
         status_code = response.status_code
         assert status_code == 401
 
+
 # поиск фильма на английском языке
+
 
 @pytest.mark.api
 @allure.title("Поиск фильма на английском языке")
 @allure.story("Поиск")
 def test_search_film_name_eng():
-    name = 'Star wars'
-    url = (f"https://kinopoiskapiunofficial.tech/api/v2.1/"
-           f"films/search-by-keyword?keyword={name}&page=1")
-    key = os.getenv('API_KEY')
+    name = "Star wars"
+    url = (
+        f"https://kinopoiskapiunofficial.tech/api/v2.1/"
+        f"films/search-by-keyword?keyword={name}&page=1"
+    )
+    key = os.getenv("API_KEY")
     payload = {}
-    headers = {
-        'accept': 'application/json',
-        'X-API-KEY': key
-    }
+    headers = {"accept": "application/json", "X-API-KEY": key}
     with allure.step("Отправляем запрос"):
         response = requests.request("GET", url, headers=headers, data=payload)
         status_code = response.status_code
@@ -78,25 +79,25 @@ def test_search_film_name_eng():
         assert isinstance(resp, dict)
         keyword = resp["keyword"]
         pages_count = resp["pagesCount"]
-        film = resp['films']
+        film = resp["films"]
         assert keyword == name
         assert pages_count > 0
         assert isinstance(film, list)
+
 
 @pytest.mark.api
 @allure.title("Поиск фильма пустой запрос")
 @allure.story("Поиск")
 # поиск фильма без названия
 def test_search_film_no_name():
-    name = ''
-    url = (f"https://kinopoiskapiunofficial.tech/api/v2.1/"
-           f"films/search-by-keyword?keyword={name}&page=1")
-    key = os.getenv('API_KEY')
+    name = ""
+    url = (
+        f"https://kinopoiskapiunofficial.tech/api/v2.1/"
+        f"films/search-by-keyword?keyword={name}&page=1"
+    )
+    key = os.getenv("API_KEY")
     payload = {}
-    headers = {
-        'accept': 'application/json',
-        'X-API-KEY': key
-    }
+    headers = {"accept": "application/json", "X-API-KEY": key}
     with allure.step("Отправляем запрос"):
         response = requests.request("GET", url, headers=headers, data=payload)
     status_code = response.status_code
@@ -110,20 +111,20 @@ def test_search_film_no_name():
         assert keyword == name
         assert pages_count == 0
 
+
 @pytest.mark.api
 @allure.title("Поиск фильма цифры")
 @allure.story("Поиск")
 # поиск фильма в названии номер
 def test_search_film_number():
-    name = '911'
-    url = (f"https://kinopoiskapiunofficial.tech/api/v2.1/"
-           f"films/search-by-keyword?keyword={name}&page=1")
-    key = os.getenv('API_KEY')
+    name = "911"
+    url = (
+        f"https://kinopoiskapiunofficial.tech/api/v2.1/"
+        f"films/search-by-keyword?keyword={name}&page=1"
+    )
+    key = os.getenv("API_KEY")
     payload = {}
-    headers = {
-        'accept': 'application/json',
-        'X-API-KEY': key
-    }
+    headers = {"accept": "application/json", "X-API-KEY": key}
     with allure.step("Отправляем запрос"):
         response = requests.request("GET", url, headers=headers, data=payload)
     status_code = response.status_code

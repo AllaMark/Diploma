@@ -2,6 +2,7 @@ from page.main_page import Main_page
 import allure
 import pytest
 
+
 @pytest.mark.ui
 @allure.title("Поиск фильма на русском языке")
 @allure.story("Поиск")
@@ -15,7 +16,8 @@ def test_search_film(driver):
     with allure.step("Выполняем проверку, что фильм первый в списке"):
         assert main_page.get_top_search_results(film_name) == film_name
 
-@pytest.mark.api
+
+@pytest.mark.ui
 @allure.title("Переход на вкладку «Билеты в кино»")
 @allure.story("Переход")
 def test_go_to_movie_tickets(driver):
@@ -28,7 +30,8 @@ def test_go_to_movie_tickets(driver):
     with allure.step("Выполняем проверку, что перешли на страницу"):
         assert "Билеты в кино" in response
 
-@pytest.mark.api
+
+@pytest.mark.ui
 @allure.title("Переход на вкладку «Фильмы»")
 @allure.story("Переход")
 def test_go_to_movie_films(driver):
@@ -41,7 +44,8 @@ def test_go_to_movie_films(driver):
     with allure.step("Выполняем проверку, что перешли на страницу"):
         assert "Фильмы" in response
 
-@pytest.mark.api
+
+@pytest.mark.ui
 @allure.title("Переход на вкладку «Сериалы»")
 @allure.story("Переход")
 def test_go_to_serial(driver):
